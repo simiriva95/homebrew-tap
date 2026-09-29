@@ -13,18 +13,22 @@ cask "portpilot" do
   end
 
   auto_updates true
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "PortPilot.app"
 
   # Not signed with an Apple Developer ID: remove the quarantine flag and sign it locally,
   # the same steps as https://github.com/simiriva95/portpilot#sign-it-yourself
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args:         ["-dr", "com.apple.quarantine", "#{appdir}/PortPilot.app"],
-                   must_succeed: false
-    system_command "/usr/bin/codesign",
-                   args: ["--force", "--deep", "--sign", "-", "#{appdir}/PortPilot.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", "{{appdir}}/PortPilot.app"],
+        must_succeed:   false,
+        writable_paths: ["PortPilot.app"],
+        writable_base:  :appdir
+    run "/usr/bin/codesign",
+        args:           ["--force", "--deep", "--sign", "-", "{{appdir}}/PortPilot.app"],
+        writable_paths: ["PortPilot.app"],
+        writable_base:  :appdir
   end
 
   uninstall quit: "io.github.simiriva95.portpilot"
