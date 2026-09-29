@@ -1,6 +1,6 @@
 cask "portpilot" do
-  version "0.1.2"
-  sha256 "019269fcb7dc3591f46209bab86bfd0156d210ecd5680cfa9ec4ea59db024696"
+  version "0.1.3"
+  sha256 "4c8b231b4a72997d2cb92894df1ec085e0b86f61363695f6edf1b0496bf08128"
 
   url "https://github.com/simiriva95/portpilot/releases/download/v#{version}/PortPilot-#{version}.dmg"
   name "PortPilot"
